@@ -1,0 +1,64 @@
+version: '3.8'
+
+services:
+  vocabx-api:
+    container_name: vocabx-api
+    build:
+      context: ./vocabx-api
+      dockerfile: Dockerfile
+      args:
+        user: vicky
+        uid: 1000
+    restart: unless-stopped
+    tty: true
+    working_dir: /var/www
+    volumes:
+      - ./:/var/www
+      - vendor_data:/var/www/vendor # Preserve vendor from image build
+    ports:
+      - "9000:9000"
+    environment:
+      - APP_ENV=local
+      - APP_DEBUG=true
+
+  vocabx-web:
+    container_name: vocabx-web
+    build:
+      context: ./vocabx-web # Path to the vocabx-web directory from the root
+      dockerfile: Dockerfile
+      args:
+        VITE_API_URL: http://localhost:8080 # API URL accessible from the browser
+    ports:
+      - "3000:80"
+    depends_on:
+      - vocabx-api # Or 'app', matching your API service name
+
+  webserver:
+    container_name: laravel_webserver
+    image: nginx:alpine
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    volumes:
+      - ./:/var/www
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - vocabx-web
+
+  db:
+    container_name: vocabx-db
+    image: mysql:latest
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    volumes:
+      - dbdata:/var/lib/mysql
+    ports:
+      - "3306:3306"
+
+volumes:
+  dbdata:
+  vendor_data:

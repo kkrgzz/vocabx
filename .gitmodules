@@ -1,0 +1,6 @@
+[submodule "vocabx-web"]
+	path = vocabx-web
+	url = https://github.com/kkrgzz/vocabx-web
+[submodule "vocabx-api"]
+	path = vocabx-api
+	url = https://github.com/kkrgzz/vocabx-web
