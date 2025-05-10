@@ -1,0 +1,66 @@
+# Dependencies
+/node_modules
+/vocabx-api/node_modules
+/vocabx-web/node_modules
+/vendor/
+
+# Build artifacts
+/dist
+/build
+/out
+/vocabx-api/dist
+/vocabx-web/dist
+
+# Environment variables - files containing secrets and local configurations
+.env
+.env.*
+!/.env.example
+!/.env.sample
+/vocabx-api/.env
+/vocabx-web/.env
+
+# Log files
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Nginx Proxy Manager data
+# These files often contain instance-specific data or secrets.
+# If you have template/example files, commit those instead and ignore the live ones.
+/npm_data/database.sqlite
+/npm_data/keys.json
+/npm_data/custom_ssl/
+/npm_data/letsencrypt/
+/npm_data/logs/
+/npm_data/nginx/
+/npm_data/access/
+/letsencrypt/
+
+# IDE and editor directories
+.vscode/
+.idea/
+*.project
+*.classpath
+*.cproject
+*.launch
+*.settings
+*.iml
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# OS generated files
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Docker
+.dockerignore
+docker-compose.override.yml
